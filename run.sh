@@ -2,8 +2,11 @@ set -e
 
 apt update
 apt install -f docker.io
+rm -rf vpn.tar
 xz -d -k vpn.tar.xz
 docker load -i vpn.tar
+docker stop ipsec-vpn-server
+docker rm ipsec-vpn-server
 docker run \
     --name ipsec-vpn-server \
     --env-file ./vpn.env \
